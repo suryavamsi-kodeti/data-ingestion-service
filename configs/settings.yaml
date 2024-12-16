@@ -1,0 +1,17 @@
+api:
+  key: "18a1b470-23d8-40c4-a1ec-933693d0810b"
+  url: "https://cds.climate.copernicus.eu/api/"
+s3:
+  bucket_name: "non-cat-weather-data"
+  base_path: "raw/ERA5"
+variables:
+  - "2m_temperature"
+  - "total_precipitation"
+  - "10m_u_component_of_wind"
+  - "10m_v_component_of_wind"
+  - "surface_solar_radiation_downwards"
+  - "snow_depth"
+  - "snowfall"
+time_range:
+  start_hour: 0
+  end_hour: 23

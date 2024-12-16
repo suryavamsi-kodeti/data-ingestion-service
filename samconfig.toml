@@ -1,0 +1,7 @@
+version = 0.1
+
+[default.deploy.parameters]
+stack_name = "lambda-data-ingestion-service-stack"
+s3_bucket = "lambda-data-ingestion-bucket"
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"
