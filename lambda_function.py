@@ -71,6 +71,6 @@ def lambda_handler(event, context):
     # Cleanup temporary file
     if os.path.exists(filename):
         os.remove(filename)
-
+        
     return {"status": "success", "file_uploaded": key}
-    print("success")
+    
