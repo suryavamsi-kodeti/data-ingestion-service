@@ -48,7 +48,7 @@ def lambda_handler(event, context):
         "month": f"{month:02d}",
         "day": f"{day:02d}",
         "time": time_intervals,
-        "format": "netcdf",
+        "format": "netcdf"
     }
 
     # Fetch and download data
