@@ -4,6 +4,7 @@ import yaml
 import os
 
 
+
 def load_config():
     """Loads the YAML configuration file."""
     config_path = os.path.join(os.path.dirname(__file__), "configs", "settings.yaml")
@@ -72,3 +73,4 @@ def lambda_handler(event, context):
         os.remove(filename)
 
     return {"status": "success", "file_uploaded": key}
+    print("success")
