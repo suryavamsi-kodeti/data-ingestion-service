@@ -2,7 +2,7 @@ api:
   key: "18a1b470-23d8-40c4-a1ec-933693d0810b"
   url: "https://cds.climate.copernicus.eu/api/"
 s3:
-  bucket_name: "non-cat-weather-data"
+  bucket_name: "prg-weather"
   base_path: "raw/ERA5"
 variables:
   - "2m_temperature"
