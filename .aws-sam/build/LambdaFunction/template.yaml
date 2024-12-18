@@ -7,10 +7,10 @@ Resources:
       Handler: lambda_function.lambda_handler
       Runtime: python3.9
       CodeUri: .
-      MemorySize: 128
-      Timeout: 60
+      MemorySize: 1024
+      Timeout: 600
       Policies:
         - AWSLambdaBasicExecutionRole
       Environment:
         Variables:
-          CDS_API_KEY: 18a1b470-23d8-40c4-a1ec-933693d0810b
+          CDS_API_KEY: bb3623cd-e4e6-49f6-bb17-6f1b77554a5b

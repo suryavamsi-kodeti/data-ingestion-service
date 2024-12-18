@@ -4,6 +4,8 @@ import yaml
 import os
 
 
+
+
 def load_config():
     """Loads the YAML configuration file."""
     config_path = os.path.join(os.path.dirname(__file__), "configs", "settings.yaml")
@@ -48,7 +50,7 @@ def lambda_handler(event, context):
         "month": f"{month:02d}",
         "day": f"{day:02d}",
         "time": time_intervals,
-        "format": "netcdf",
+        "format": "netcdf"
     }
 
     # Fetch and download data
@@ -70,5 +72,5 @@ def lambda_handler(event, context):
     # Cleanup temporary file
     if os.path.exists(filename):
         os.remove(filename)
-
     return {"status": "success", "file_uploaded": key}
+   
