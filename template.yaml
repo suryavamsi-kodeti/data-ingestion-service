@@ -27,7 +27,7 @@ Resources:
     Type: AWS::Events::Rule
     Properties:
       Name: dataingestionDailyLambdaRule
-      ScheduleExpression: "cron(0 08 * * ? *)"
+      ScheduleExpression: "cron(0 03 * * ? *)"
       EventPattern:
         source:
           - "aws.events"
