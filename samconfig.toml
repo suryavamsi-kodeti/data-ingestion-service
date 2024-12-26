@@ -1,11 +1,12 @@
 version = 0.1
-
+[default.build.parameters]
+PIP_TRUSTED_HOST = "portal.speedwellclimate.com"
 [default.deploy.parameters]
-stack_name = "lambda-data-ingestion-service-stack"
-s3_bucket = "lambda-data-ingestion-bucket"
+stack_name = "lambda-speedwell-historical-service-stack"
+s3_bucket = "lambda-speedwell-historical-bucket"
 region = "us-east-1"
 capabilities = "CAPABILITY_IAM"
 resolve_s3 = true
-s3_prefix = "lambda-data-ingestion-service-stack"
+s3_prefix = "lambda-speedwell-historical-service-stack"
 confirm_changeset = true
 image_repositories = []

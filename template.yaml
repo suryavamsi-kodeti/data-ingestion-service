@@ -1,3 +1,4 @@
+
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Resources:
@@ -5,8 +6,8 @@ Resources:
   LambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: dataingestion-daily
-      Handler: dataingestion_daily.lambda_handler
+      FunctionName: speedwell-historical
+      Handler: speedwell_historical.lambda_handler
       Runtime: python3.9
       CodeUri: .
       MemorySize: 1024
@@ -19,26 +20,26 @@ Resources:
               Action:
                 - secretsmanager:GetSecretValue
               Resource: "*"
+
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - s3:GetObject
+                - s3:PutObject
+              Resource: "arn:aws:s3:::non-cat-weather-data/*"  
       Environment:
         Variables:
-          CDS_API_KEY: arn:aws:secretsmanager:us-east-1:316284689099:secret:apisecretkey-msVcZv
+          SPEEDWELL_API_DETAILS_ARN: arn:aws:secretsmanager:us-east-1:316284689099:secret:speedwellapisecretdetails-fJw8kC
 
   LambdaEventRule:
     Type: AWS::Events::Rule
     Properties:
-      Name: dataingestionDailyLambdaRule
+      Name: speedwellHistoricalDailyLambdaRule
       ScheduleExpression: "cron(0 03 * * ? *)"
-      EventPattern:
-        source:
-          - "aws.events"
       Targets:
         - Arn: !GetAtt LambdaFunction.Arn
-          Id: "dataingestionLambdaFunctionTarget"
-          InputTransformer:
-            InputPathsMap:
-              time: "$.time"
-            InputTemplate: '{"input_time": <time>}'
-
+          Id: "speedwellHistoricalLambdaFunctionTarget"
   LambdaInvokePermission:
     Type: AWS::Lambda::Permission
     Properties:
@@ -46,10 +47,3 @@ Resources:
       Action: lambda:InvokeFunction
       Principal: events.amazonaws.com
       SourceArn: !GetAtt LambdaEventRule.Arn        
-
-Metadata:
-  LambdaFunction:
-    BuildMethod: makefile
-    BuildProperties:
-      Exclude:
-        - template.yaml
