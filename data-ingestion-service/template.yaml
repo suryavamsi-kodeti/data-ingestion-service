@@ -1,0 +1,55 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+ 
+  LambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: dataingestion-daily
+      Handler: dataingestion_daily.lambda_handler
+      Runtime: python3.9
+      CodeUri: .
+      MemorySize: 1024
+      Timeout: 600
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - secretsmanager:GetSecretValue
+              Resource: "*"
+      Environment:
+        Variables:
+          CDS_API_KEY: arn:aws:secretsmanager:us-east-1:316284689099:secret:apisecretkey-msVcZv
+
+  LambdaEventRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: dataingestionDailyLambdaRule
+      ScheduleExpression: "cron(0 03 * * ? *)"
+      EventPattern:
+        source:
+          - "aws.events"
+      Targets:
+        - Arn: !GetAtt LambdaFunction.Arn
+          Id: "dataingestionLambdaFunctionTarget"
+          InputTransformer:
+            InputPathsMap:
+              time: "$.time"
+            InputTemplate: '{"input_time": <time>}'
+
+  LambdaInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName:  !Ref LambdaFunction
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt LambdaEventRule.Arn        
+
+Metadata:
+  LambdaFunction:
+    BuildMethod: makefile
+    BuildProperties:
+      Exclude:
+        - template.yaml

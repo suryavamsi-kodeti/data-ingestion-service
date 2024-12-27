@@ -1,0 +1,10 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "lambda-retrive-forecast-service-stack"
+s3_bucket = "lambda-retrive-forecast-bucket"
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"
+resolve_s3 = true
+s3_prefix = "lambda-retrive-forecast-service-stack"
+confirm_changeset = true
+image_repositories = []

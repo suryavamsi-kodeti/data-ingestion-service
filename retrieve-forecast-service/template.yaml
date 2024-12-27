@@ -1,0 +1,49 @@
+
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+ 
+  LambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: retrive-forecast
+      Handler: retrieve_forecast.lambda_handler
+      Runtime: python3.9
+      CodeUri: .
+      MemorySize: 1024
+      Timeout: 600
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - secretsmanager:GetSecretValue
+              Resource: "*"
+
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - s3:GetObject
+                - s3:PutObject
+              Resource: "arn:aws:s3:::non-cat-weather-data/*"  
+      Environment:
+        Variables:
+          SPEEDWELL_API_DETAILS_ARN: arn:aws:secretsmanager:us-east-1:316284689099:secret:speedwellapisecretdetails-fJw8kC
+
+  LambdaEventRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: retriveForecastDailyLambdaRule
+      ScheduleExpression: "cron(0 03 * * ? *)"
+      Targets:
+        - Arn: !GetAtt LambdaFunction.Arn
+          Id: "retriveForecastLambdaFunctionTarget"
+  LambdaInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName:  !Ref LambdaFunction
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt LambdaEventRule.Arn        
