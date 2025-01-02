@@ -3,7 +3,7 @@ import cdsapi
 import yaml
 import os
 import json
-
+from datetime import datetime,timedelta
 def load_config():
     """Loads the YAML configuration file."""
     config_path = os.path.join(os.path.dirname(__file__), "configs", "settings.yaml")
@@ -24,6 +24,13 @@ def generate_time_intervals(start_hour, end_hour):
     """Generates a list of hourly time intervals between start_hour and end_hour."""
     return [f"{hour:02d}:00" for hour in range(start_hour, end_hour + 1)]
 
+def _get_before_date(startdate,days_before):
+    inputdate_obj = datetime.strptime(startdate, "%Y-%m-%dT%H:%M:%SZ")
+    x_days_before=inputdate_obj-timedelta(days=days_before)
+    return x_days_before.strftime("%Y-%m-%dT%H:%M:%SZ")
+    
+
+
 
 def lambda_handler(event, context):
     config = load_config()
@@ -39,11 +46,12 @@ def lambda_handler(event, context):
     time_intervals = generate_time_intervals(
         time_range["start_hour"], time_range["end_hour"]
     )
+    cds_input_time=_get_before_date(event["input_time"],5)
 
     # Event details
-    year = event["input_time"][0:4]
-    month = event["input_time"][5:7]
-    day = event["input_time"][8:10]
+    year = cds_input_time[0:4]
+    month = cds_input_time[5:7]
+    day = cds_input_time[8:10]
 
     print(f"year = {year}, month = {month}, day= {day}")
 

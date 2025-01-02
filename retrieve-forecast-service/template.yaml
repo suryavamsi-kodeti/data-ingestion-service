@@ -2,10 +2,10 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Resources:
- 
   LambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
+    
       FunctionName: retrive-forecast
       Handler: retrieve_forecast.lambda_handler
       Runtime: python3.9
@@ -28,9 +28,9 @@ Resources:
                 - s3:GetObject
                 - s3:PutObject
               Resource: "arn:aws:s3:::non-cat-weather-data/*"  
-      Environment:
-        Variables:
-          SPEEDWELL_API_DETAILS_ARN: arn:aws:secretsmanager:us-east-1:316284689099:secret:speedwellapisecretdetails-fJw8kC
+      # Environment:
+      #   Variables:
+      #     SPEEDWELL_API_DETAILS_ARN: arn:aws:secretsmanager:us-east-1:316284689099:secret:speedwellapisecretdetails-fJw8kC
 
   LambdaEventRule:
     Type: AWS::Events::Rule
@@ -46,4 +46,8 @@ Resources:
       FunctionName:  !Ref LambdaFunction
       Action: lambda:InvokeFunction
       Principal: events.amazonaws.com
-      SourceArn: !GetAtt LambdaEventRule.Arn        
+      SourceArn: !GetAtt LambdaEventRule.Arn
+  # Metadata:
+  #   Dockerfile: Dockerfile
+  #   DockerContext: .
+  #   DockerTag: v1      
