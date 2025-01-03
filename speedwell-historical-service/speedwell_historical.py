@@ -155,10 +155,10 @@ def lambda_handler(event, context):
     )
 
     for i in range(len(df)):
-        print(f"Start processing {df["SRC_ID"]}")
+        print(f'Start processing {df["SRC_ID"]}')
         process_station_history(speedwell_session, df["SRC_ID"][i], "tmin")
         process_station_history(speedwell_session, df["SRC_ID"][i], "tmax")
         process_station_history(speedwell_session, df["SRC_ID"][i], "tmean")
         process_station_history(speedwell_session, df["SRC_ID"][i], "thour")
-        print(f"Processed {i}, {len(df)}, {df["SRC_ID"][i]}")
+        print(f'Processed {i}, {len(df)}, {df["SRC_ID"][i]}')
     return {"status": "success"}

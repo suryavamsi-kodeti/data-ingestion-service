@@ -9,6 +9,7 @@ import xarray as xr
 import cfgrib
 from ecmwf.opendata import Client
 from pathlib import Path
+import eccodes
 
 
 def _fetch_file_list_from_s3(s3_client, bucket_name, prefix):
@@ -347,12 +348,13 @@ def retrieve_IFS_ensemble_forecast(year, month, day, hour):
 
 def lambda_handler(event, context):
     today = dt.date.today()
+    print(os.getenv('LD_LIBRARY_PATH'))
     start_day = today - dt.timedelta(days=15)
     run_days = [today - dt.timedelta(days=i) for i in range(15)]
     for day in run_days:
         for hour in [0,6,12,18]:
-            #retrieve_GFS_forecast(day.year, day.month, day.day,
-            #                      str(hour).zfill(2))
+            retrieve_GFS_forecast(day.year, day.month, day.day,
+                                 str(hour).zfill(2))
             
             retrieve_AIFS_forecast(
                 day.year,

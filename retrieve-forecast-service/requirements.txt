@@ -4,7 +4,7 @@ ecmwf-opendata
 xarray
 cfgrib
 dask
-
+ecmwflibs
 # asttokens==3.0.0
 # attrs==24.3.0
 # backcall==0.2.0
