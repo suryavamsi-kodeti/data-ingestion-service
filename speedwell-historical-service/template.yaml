@@ -6,7 +6,7 @@ Resources:
   LambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: speedwell-historical
+      FunctionName: retrieve-speedwell-historical-daily
       Handler: speedwell_historical.lambda_handler
       Runtime: python3.9
       CodeUri: .

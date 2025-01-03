@@ -1,8 +1,8 @@
 api:
   url: "https://cds.climate.copernicus.eu/api/"
 s3:
-  bucket_name: "prg-weather"
-  base_path: "raw/ERA5"
+  bucket_name: "non-cat-weather-data"
+  base_path: "raw/ERA5T"
 variables:
   - "2m_temperature"
   - "total_precipitation"

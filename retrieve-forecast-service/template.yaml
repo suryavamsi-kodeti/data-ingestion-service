@@ -6,7 +6,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
     
-      FunctionName: retrive-forecast
+      FunctionName: retrieve-forecast-daily
       Handler: retrieve_forecast.lambda_handler
       Runtime: python3.9
       CodeUri: .

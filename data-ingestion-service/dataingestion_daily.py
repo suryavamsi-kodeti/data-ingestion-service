@@ -78,7 +78,8 @@ def lambda_handler(event, context):
 
     # Upload file to S3
     s3 = boto3.client("s3")
-    key = f"{base_path}/{year}/{str(month).zfill(2)}/{str(day).zfill(2)}/ERA5_hourly_{year}_{str(month).zfill(2)}_{str(day).zfill(2)}.nc"
+    # key = f"{base_path}/{year}/{str(month).zfill(2)}/{str(day).zfill(2)}/ERA5_hourly_{year}_{str(month).zfill(2)}_{str(day).zfill(2)}.nc"
+    key = f"{base_path}/ERA5_hourly_{year}_{str(month).zfill(2)}_{str(day).zfill(2)}.nc"
     try:
         s3.upload_file(filename, bucket_name, key)
         

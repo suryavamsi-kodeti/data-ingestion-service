@@ -5,7 +5,7 @@ Resources:
   LambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: dataingestion-daily
+      FunctionName: retrieve-era5t-daily
       Handler: dataingestion_daily.lambda_handler
       Runtime: python3.9
       CodeUri: .
